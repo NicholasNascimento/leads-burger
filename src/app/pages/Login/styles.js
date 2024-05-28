@@ -33,6 +33,11 @@ export const Content = styled.div`
   border-radius: 20px;
 
   div {
+    position: relative;
+    height: 68px;
+  }
+
+  .buttonBox {
     width: 87%;
     padding: 12px 16px;
     margin-top: 32px;
@@ -45,10 +50,19 @@ export const Content = styled.div`
 
   input {
     height: 48px;
+    width: 100%;
     padding: 0 24px;
 
     border: 1px solid var(--text-primary);
     border-radius: 4px;
+  }
+
+  p {
+    position: absolute;
+    bottom: 0;
+
+    color: var(--text-primary);
+    font-size: 14px;
   }
 
   button {
@@ -56,6 +70,8 @@ export const Content = styled.div`
     width: 100%;
 
     background-color: var(--red);
+    color: var(--white);
+    font-size: 14px;
     border: none;
     border-radius: 4px;
     transition: all 0.3s;
