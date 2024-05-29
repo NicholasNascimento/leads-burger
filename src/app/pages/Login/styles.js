@@ -20,7 +20,7 @@ export const Container = styled.div`
 `
 
 export const Content = styled.div`
-  height: 40vh;
+  height: ${(props) => (props.active ? '47vh' : '45vh')};
   width: 40vw;
   padding: 80px 48px;
   margin-top: 16px;
@@ -33,16 +33,18 @@ export const Content = styled.div`
   border-radius: 20px;
 
   div {
+    display: flex;
     position: relative;
-    height: 68px;
+  }
+
+  div + div {
+    margin-top: 16px;
   }
 
   .buttonBox {
-    width: 87%;
+    width: 100%;
     padding: 12px 16px;
     margin-top: 32px;
-    position: absolute;
-    bottom: 32px;
 
     background-color: var(--yellow);
     border-radius: 4px;
@@ -57,15 +59,15 @@ export const Content = styled.div`
     border-radius: 4px;
   }
 
-  p {
+  .error {
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
 
     color: var(--text-primary);
     font-size: 14px;
   }
 
-  button {
+  .submitButton {
     height: 48px;
     width: 100%;
 
@@ -79,5 +81,27 @@ export const Content = styled.div`
     &:hover {
       opacity: 0.9;
     }
+  }
+
+  .registerButton {
+    width: fit-content;
+    margin: 0 auto;
+
+    background-color: transparent;
+    color: var(--white);
+    font-size: 14px;
+    border: none;
+
+    transition: all 0.2s;
+
+    &:hover {
+      border-bottom: 1px solid var(--white);
+    }
+  }
+
+  .or {
+    text-align: center;
+    font-size: 14px;
+    color: var(--white);
   }
 `

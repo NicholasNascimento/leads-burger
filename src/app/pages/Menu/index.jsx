@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { LuSandwich } from "react-icons/lu";
+import { FaShoppingCart } from "react-icons/fa";
 
 import { MenuItem } from "../../components/MenuItem/index.jsx";
 
 import * as S from "./styles.js"
 
 export function Menu() {
+  const navigate = useNavigate();
   const sandwiches = [
     {
       id: 1,
@@ -32,6 +35,7 @@ export function Menu() {
             <MenuItem
               key={sandwich.id}
               name={sandwich.name}
+              id={sandwich.id}
               type={sandwich.type}
               description={sandwich.description}
               price={sandwich.price}
@@ -39,6 +43,12 @@ export function Menu() {
           ))}
         </S.Menu>
       </S.Content>
+
+      <S.CartButton
+        onClick={() => navigate('/cart')}
+      >
+        <span><FaShoppingCart /></span>
+      </S.CartButton>
     </S.Container>
   )
 }
