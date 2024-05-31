@@ -22,14 +22,14 @@ export function MenuItem({ name, id, type, description, price }) {
 
   function handleIncrementQuantity() {
     const newQuantity = quantity + 1;
-    const itemData = { id, name, price, quantity: newQuantity };
+    const itemData = { id, name, price, type, quantity: newQuantity };
     updateCart(itemData);
     setQuantity(newQuantity);
   }
   
   function handleDecrementQuantity() {
     const newQuantity = quantity - 1;
-    const itemData = { id, name, price, quantity: newQuantity };
+    const itemData = { id, name, price, type, quantity: newQuantity };
     if (newQuantity > 0) {
       updateCart(itemData);
     } else {

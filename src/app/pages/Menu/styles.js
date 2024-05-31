@@ -3,14 +3,39 @@ import styled from 'styled-components'
 export const Container = styled.div`
   min-height: 100vh;
   display: flex;
+  position: relative;
 
   background-color: var(--yellow);
+
+  .user {
+    height: fit-content;
+    position: absolute;
+    top: 24px;
+    right: 160px;
+
+    background-color: transparent;
+    font-size: 48px;
+    color: var(--red);
+    border: none;
+  }
+
+  .logout {
+    height: fit-content;
+    position: absolute;
+    top: 22px;
+    right: 64px;
+
+    background-color: transparent;
+    font-size: 52px;
+    color: var(--red);
+    border: none;
+  }
 `
 
 export const Content = styled.div`
   width: 40%;
   height: fit-content;
-  margin: 64px auto;
+  margin: 96px auto;
   padding: 12px;
   display: flex;
   flex-direction: column;

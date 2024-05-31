@@ -10,7 +10,8 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: 40%;
   height: fit-content;
-  margin: 64px auto;
+  min-height: 20vh;
+  margin: 96px auto;
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -19,7 +20,7 @@ export const Content = styled.div`
   background-color: var(--red);
   border-radius: 16px;
 
-  button {
+  .backButton {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -39,5 +40,38 @@ export const Content = styled.div`
 
   span {
     font-size: 42px;
+  }
+
+  .orderConfirmation {
+    height: 88px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    p {
+      color: var(--white);
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 32px;
+
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--red);
+      border: 1px solid var(--red);
+      border-radius: 4px;
+
+      transition: all 0.3s;
+
+      &:hover {
+        border: 1px solid var(--white);
+        background-color: var(--red);
+        color: var(--white);
+      }
+    }
   }
 `

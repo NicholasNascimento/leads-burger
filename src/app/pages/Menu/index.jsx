@@ -1,12 +1,17 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { LuSandwich } from "react-icons/lu";
+import { BiSolidFoodMenu } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
+import { LuSandwich } from "react-icons/lu";
 
 import { MenuItem } from "../../components/MenuItem/index.jsx";
+import { CartContext } from "../../context/CartContext.jsx";
 
 import * as S from "./styles.js"
 
 export function Menu() {
+  const { cartItems } = useContext(CartContext);
   const navigate = useNavigate();
   const sandwiches = [
     {
@@ -27,6 +32,19 @@ export function Menu() {
 
   return (
     <S.Container>
+      <button
+        className="user"
+        onClick={() => navigate('/orders')}
+      >
+        <BiSolidFoodMenu />
+      </button>
+      <button
+        className="logout"
+        onClick={() => navigate('/')}
+      >
+        <IoLogOutOutline />
+      </button>
+
       <S.Content>
         <h1>Leads Burger <span><LuSandwich /></span></h1>
 
@@ -44,11 +62,13 @@ export function Menu() {
         </S.Menu>
       </S.Content>
 
-      <S.CartButton
-        onClick={() => navigate('/cart')}
-      >
-        <span><FaShoppingCart /></span>
-      </S.CartButton>
+      {cartItems.length > 0 &&
+        <S.CartButton
+          onClick={() => navigate('/cart')}
+        >
+          <span><FaShoppingCart /></span>
+        </S.CartButton>
+      }
     </S.Container>
   )
 }
