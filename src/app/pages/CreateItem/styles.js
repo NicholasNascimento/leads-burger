@@ -7,18 +7,6 @@ export const Container = styled.div`
 
   background-color: var(--yellow);
 
-  .orders {
-    height: fit-content;
-    position: absolute;
-    top: 24px;
-    right: 160px;
-
-    background-color: transparent;
-    font-size: 48px;
-    color: var(--red);
-    border: none;
-  }
-
   .logout {
     height: fit-content;
     position: absolute;
@@ -35,13 +23,26 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: 40%;
   height: fit-content;
+  min-height: 20vh;
   margin: 96px auto;
   padding: 12px;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   background-color: var(--red);
   border-radius: 16px;
+
+  .backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    background-color: transparent;
+    color: var(--white);
+    font-size: 28px;
+    border: none;
+  }
 
   h1 {
     display: flex;
@@ -52,35 +53,5 @@ export const Content = styled.div`
 
   span {
     font-size: 42px;
-  }
-`
-
-export const Menu = styled.div`
-  background-color: var(--white);
-  border-radius: 16px;
-`
-
-export const CartButton = styled.button`
-  position: fixed;
-  padding: 16px;
-  bottom: 10vh;
-  right: 5vw;
-
-  border: none;
-  border-radius: 100%;
-  background-color: var(--red);
-
-  transition: all 0.3s;
-
-  span {
-    display: flex;
-    font-size: 32px;
-    color: var(--white);
-  }
-
-  &:hover {
-    padding: 20px;
-    right: 4.8vw;
-    bottom: 9.5vh;
   }
 `

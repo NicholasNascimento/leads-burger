@@ -3,10 +3,12 @@ import { FaHamburger, FaPlus } from "react-icons/fa";
 import { IoRemoveOutline } from "react-icons/io5";
 
 import { CartContext } from "../../context/CartContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import * as S from "./styles.js";
 
 export function MenuItem({ name, id, type, description, price }) {
   const { cartItems, updateCart, removeFromCart } = useContext(CartContext);
+  const { user } = useContext(UserContext)
   const [quantity, setQuantity] = useState(0);
   const formattedPrice = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -45,14 +47,18 @@ export function MenuItem({ name, id, type, description, price }) {
         <h2>{name}</h2>
         <p>{description}</p>
       </div>
-      <div className="updateCart">
-        <div>
-          <button onClick={handleIncrementQuantity} disabled={quantity === 9}><FaPlus /></button>
-          <button onClick={handleDecrementQuantity} disabled={quantity === 0}><IoRemoveOutline /></button>
-        </div>
-        <strong>{quantity}</strong>
-      </div>
-      <strong className="price">{formattedPrice}</strong>
+      {user !== "admin" &&
+        <>
+          <div className="updateCart">
+            <div>
+              <button onClick={handleIncrementQuantity} disabled={quantity === 9}><FaPlus /></button>
+              <button onClick={handleDecrementQuantity} disabled={quantity === 0}><IoRemoveOutline /></button>
+            </div>
+            <strong>{quantity}</strong>
+          </div>
+          <strong className="price">{formattedPrice}</strong>
+        </>
+      }
     </S.Container>
   );
 }

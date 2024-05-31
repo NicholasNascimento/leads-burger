@@ -4,27 +4,38 @@ import { FaArrowLeft } from "react-icons/fa";
 import { LuSandwich } from "react-icons/lu";
 
 import { CartContext } from "../../context/CartContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 import { CartItem } from "../../components/CartItem/index.jsx";
 
-import * as S from "./styles.js"
+import * as S from "./styles.js";
 
 export function Cart() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
+  const { addOrder } = useContext(UserContext);
   const navigate = useNavigate();
+
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const formattedTotal = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
   }).format(total);
 
+  const handleMakeOrder = () => {
+    const newOrder = {
+      items: cartItems,
+      total: total,
+      date: new Date().toISOString()
+    };
+    addOrder(newOrder);
+    clearCart();
+    navigate('/orders');
+  };
+
   return (
     <S.Container>
       <S.Content>
         <h1>Leads Burger <span><LuSandwich /></span></h1>
-        <button
-          className="backButton"
-          onClick={() => navigate('/menu')}
-        >
+        <button className="backButton" onClick={() => navigate('/menu')}>
           <FaArrowLeft />
         </button>
 
@@ -42,7 +53,7 @@ export function Cart() {
         {cartItems.length > 0 &&
           <div className="orderConfirmation">
             <p>Total: {formattedTotal}</p>
-            <button>Fazer pedido</button>
+            <button onClick={handleMakeOrder}>Fazer pedido</button>
           </div>
         }
       </S.Content>

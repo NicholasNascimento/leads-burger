@@ -1,24 +1,26 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidFoodMenu } from "react-icons/bi";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaPlus } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { LuSandwich } from "react-icons/lu";
 
 import { MenuItem } from "../../components/MenuItem/index.jsx";
 import { CartContext } from "../../context/CartContext.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
 
 import * as S from "./styles.js"
 
 export function Menu() {
   const { cartItems } = useContext(CartContext);
+  const { user } = useContext(UserContext)
   const navigate = useNavigate();
   const sandwiches = [
     {
       id: 1,
       type: "sandwich",
       name: "X-burger",
-      description: "Pão briocheCom um suculento hambúrguer no ponto certo, você pode escolher entre o queijo cheddar ou mussarela para adicionar um toque cremoso ao seu sanduíche.",
+      description: "Pão brioche com um suculento hambúrguer no ponto certo, você pode escolher entre o queijo cheddar ou mussarela para adicionar um toque cremoso ao seu sanduíche.",
       price: 19.0,
     },
     {
@@ -33,7 +35,7 @@ export function Menu() {
   return (
     <S.Container>
       <button
-        className="user"
+        className="orders"
         onClick={() => navigate('/orders')}
       >
         <BiSolidFoodMenu />
@@ -67,6 +69,14 @@ export function Menu() {
           onClick={() => navigate('/cart')}
         >
           <span><FaShoppingCart /></span>
+        </S.CartButton>
+      }
+
+      {user === "admin" &&
+        <S.CartButton
+          onClick={() => navigate('/create_item')}
+        >
+          <span><FaPlus /></span>
         </S.CartButton>
       }
     </S.Container>
