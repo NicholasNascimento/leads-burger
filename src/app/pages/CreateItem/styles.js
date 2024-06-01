@@ -54,4 +54,52 @@ export const Content = styled.div`
   span {
     font-size: 42px;
   }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+
+    input {
+      height: 40px;
+      padding: 0 8px;
+
+      color: var(--text-secondary);
+    }
+
+    textarea {
+      height: 80px;
+      padding: 16px 8px;
+
+      color: var(--text-secondary);
+    }
+
+    select {
+      height: 40px;
+      padding: 0 8px;
+
+      color: var(--text-secondary);
+    }
+
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      margin: 16px auto 0;
+      width: 40%;
+      padding: 12px 0;
+
+      color: var(--text-primary);
+      background-color: var(--yellow);
+      border: 1px solid var(--yellow);
+      border-radius: 4px;
+    }
+
+    .halfInput {
+      width: 48%;
+    }
+  }
 `

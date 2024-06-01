@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { FaHamburger, FaPlus } from "react-icons/fa";
+import { GiFrenchFries } from "react-icons/gi";
 import { IoRemoveOutline } from "react-icons/io5";
+import { RiDrinks2Fill } from "react-icons/ri";
 
 import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
@@ -42,7 +44,13 @@ export function MenuItem({ name, id, type, description, price }) {
 
   return (
     <S.Container>
-      {type === "sandwich" && <span><FaHamburger /></span>}
+      {type === "sandwich" ? (
+        <span><FaHamburger /></span>
+      ) : type === "side" ? (
+        <span><GiFrenchFries /></span>
+      ) : (
+        <span><RiDrinks2Fill /></span>
+      )}
       <div className="info">
         <h2>{name}</h2>
         <p>{description}</p>

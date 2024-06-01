@@ -53,6 +53,15 @@ export const Content = styled.div`
   span {
     font-size: 42px;
   }
+
+  .topic {
+    width: fit-content;
+    margin: 8px auto;
+
+    font-size: 26px;
+    color: var(--red);
+    border-bottom: 3px solid var(--red);
+  }
 `
 
 export const Menu = styled.div`
