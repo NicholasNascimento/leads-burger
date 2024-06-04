@@ -1,9 +1,11 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { LuSandwich } from "react-icons/lu";
 
 import { UserContext } from '../../context/UserContext.jsx';
+import { loginUser, registerUser } from '../../utils/http/user.js';
 
 import * as S from './styles.js';
 
@@ -22,14 +24,30 @@ export function Login() {
     setActiveRegister(true)
   };
 
-  function handleLogin(data) {
-    console.log(data);
-    navigate('/menu');
-  };
+  async function handleLogin(data) {
+    try {
+      const response = await loginUser(data.username, data.password)
 
-  function handleRegister(data) {
-    console.log(data);
-    setActiveRegister(false)
+      setUser(response?.data);
+      navigate('/menu');
+    } catch (error) {
+      toast.error("Usuário ou senha incorretos!");
+      console.log(error)
+    }
+  }
+
+  async function handleRegister() {
+    try {
+      await registerUser(username, password);
+  
+      toast.success("Usuário registrado com sucesso!");
+      setUsername("");
+      setPassword("");
+      setActiveRegister(false);
+    } catch (error) {
+      toast.error("Erro ao registrar o usuário! Tente novamente.");
+      console.error(error);
+    }
   };
 
   return (

@@ -62,7 +62,7 @@ export function Menu() {
         </S.CartButton>
       }
 
-      {user === "admin" &&
+      {user?.admin &&
         <S.CartButton
           onClick={() => navigate('/create_item')}
         >
