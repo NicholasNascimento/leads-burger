@@ -8,7 +8,7 @@ import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import * as S from "./styles.js";
 
-export function MenuItem({ name, id, type, description, price }) {
+export function MenuItem({ name, id, type, description, price, handleDeleteMenuItem }) {
   const { cartItems, updateCart, removeFromCart } = useContext(CartContext);
   const { user } = useContext(UserContext)
   const [quantity, setQuantity] = useState(0);
@@ -65,6 +65,7 @@ export function MenuItem({ name, id, type, description, price }) {
             <strong>{quantity}</strong>
           </div>
           <strong className="price">{formattedPrice}</strong>
+          {/* <button onClick={() => handleDeleteMenuItem(id)}>Excluir</button> */}
         </>
       }
     </S.Container>

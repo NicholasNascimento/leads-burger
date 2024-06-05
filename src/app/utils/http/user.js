@@ -13,3 +13,11 @@ export async function registerUser(username, password) {
     password
   })
 }
+
+export async function getMenuItems() {
+  return await api.get('menu_items')
+}
+
+export async function deleteMenuItem(id) {
+  return await api.delete(`menu_items/${id}`)
+}

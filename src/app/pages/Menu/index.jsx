@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { FaShoppingCart, FaPlus } from "react-icons/fa";
@@ -8,17 +8,43 @@ import { LuSandwich } from "react-icons/lu";
 import { MenuItem } from "../../components/MenuItem/index.jsx";
 import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
+import { deleteMenuItem, getMenuItems } from "../../utils/http/user.js";
 
 import * as S from "./styles.js";
 
 export function Menu() {
-  const { cartItems, menuItems } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const [sandwiches, setSandwiches] = useState([])
+  const [sides, setSides] = useState([])
+  const [drinks, setDrinks] = useState([])
 
-  const sandwiches = menuItems.filter(item => item.type === "sandwich");
-  const sides = menuItems.filter(item => item.type === "side");
-  const drinks = menuItems.filter(item => item.type === "drink");
+  async function getAllMenuItems() {
+    try {
+      const { data } = await getMenuItems()
+
+      setSandwiches(data?.filter(item => item?.item_type === "sandwich"))
+      setSides(data?.filter(item => item?.item_type === "side"))
+      setDrinks(data?.filter(item => item?.item_type === "drink"))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function handleDeleteMenuItem(id) {
+    try {
+      await deleteMenuItem(id);
+      
+      getAllMenuItems()
+    } catch (error) {
+      console.error('Failed to delete menu item:', error);
+    }
+  }
+
+  useEffect(() => {
+    getAllMenuItems()
+  }, [])
 
   return (
     <S.Container>
@@ -36,21 +62,21 @@ export function Menu() {
           {sandwiches.length > 0 && <>
             <h2 className="topic">Sanduíches</h2>
             {sandwiches.map(sandwich => (
-              <MenuItem key={sandwich.id} {...sandwich} />
+              <MenuItem key={sandwich.id} {...sandwich} handleDeleteMenuItem={handleDeleteMenuItem}/>
             ))}
           </>}
 
           {sides.length > 0 && <>
             <h2 className="topic">Acompanhamentos</h2>
             {sides.map(side => (
-              <MenuItem key={side.id} {...side} />
+              <MenuItem key={side.id} {...side} handleDeleteMenuItem={handleDeleteMenuItem}/>
             ))}
           </>}
 
           {drinks.length > 0 && <>
             <h2 className="topic">Bebidas</h2>
             {drinks.map(drink => (
-              <MenuItem key={drink.id} {...drink} />
+              <MenuItem key={drink.id} {...drink} handleDeleteMenuItem={handleDeleteMenuItem}/>
             ))}
           </>}
         </S.Menu>
