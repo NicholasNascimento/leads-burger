@@ -1,23 +1,36 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
 import { LuSandwich } from "react-icons/lu";
 import { IoLogOutOutline } from "react-icons/io5";
 
-import { CartContext } from "../../context/CartContext.jsx";
+import { createMenuItem } from "../../utils/http/user.js";
 
 import * as S from "./styles.js"
 
 export function CreateItem() {
-  const { addItemToMenu } = useContext(CartContext);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = data => {
-    addItemToMenu(data);
-    reset();
-    navigate('/menu');
+  async function onSubmit(data) {
+    try {
+      const response = await createMenuItem({
+        menu_item: {
+          name: data.name,
+          description: data.description,
+          price: parseFloat(data.price),
+          item_type: data.type
+        }
+      });
+      console.log('Item added:', response.data);
+      navigate('/menu');
+    } catch (error) {
+      console.error('Error adding menu item:', error);
+      alert('Failed to add item');
+    } finally {
+      reset();
+      navigate('/menu');
+    }
   };
 
   return (

@@ -10,7 +10,7 @@ import { CartItem } from "../../components/CartItem/index.jsx";
 import * as S from "./styles.js";
 
 export function Cart() {
-  const { cartItems, clearCart } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const { addOrder } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -27,7 +27,6 @@ export function Cart() {
       date: new Date().toISOString()
     };
     addOrder(newOrder);
-    clearCart();
     navigate('/orders');
   };
 

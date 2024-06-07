@@ -70,4 +70,21 @@ export const Container = styled.div`
     bottom: 16px;
     right: 16px;
   }
+
+  .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    background-color: var(--disability);
+    border: 1px solid var(--text-secondary);
+    border-radius: 100%;
+
+    span {
+      font-size: 16px !important;
+      padding: 5px !important;
+      width: fit-content !important;
+      color: var(--text-primary);
+    }
+  }
 `

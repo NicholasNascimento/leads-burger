@@ -14,6 +14,10 @@ export async function registerUser(username, password) {
   })
 }
 
+export async function createMenuItem(itemData) {
+  return await api.post('menu_items', itemData)
+}
+
 export async function getMenuItems() {
   return await api.get('menu_items')
 }

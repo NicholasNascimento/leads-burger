@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { FaHamburger, FaPlus } from "react-icons/fa";
+import { FaHamburger, FaPlus, FaTrash } from "react-icons/fa";
 import { GiFrenchFries } from "react-icons/gi";
 import { IoRemoveOutline } from "react-icons/io5";
 import { RiDrinks2Fill } from "react-icons/ri";
 
 import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
+
 import * as S from "./styles.js";
 
-export function MenuItem({ name, id, type, description, price, handleDeleteMenuItem }) {
+export function MenuItem({ name, id, item_type, description, price, handleDeleteMenuItem }) {
   const { cartItems, updateCart, removeFromCart } = useContext(CartContext);
   const { user } = useContext(UserContext)
   const [quantity, setQuantity] = useState(0);
@@ -26,14 +27,14 @@ export function MenuItem({ name, id, type, description, price, handleDeleteMenuI
 
   function handleIncrementQuantity() {
     const newQuantity = quantity + 1;
-    const itemData = { id, name, price, type, quantity: newQuantity };
+    const itemData = { id, name, price, item_type, quantity: newQuantity };
     updateCart(itemData);
     setQuantity(newQuantity);
   }
   
   function handleDecrementQuantity() {
     const newQuantity = quantity - 1;
-    const itemData = { id, name, price, type, quantity: newQuantity };
+    const itemData = { id, name, price, item_type, quantity: newQuantity };
     if (newQuantity > 0) {
       updateCart(itemData);
     } else {
@@ -44,9 +45,9 @@ export function MenuItem({ name, id, type, description, price, handleDeleteMenuI
 
   return (
     <S.Container>
-      {type === "sandwich" ? (
+      {item_type === "sandwich" ? (
         <span><FaHamburger /></span>
-      ) : type === "side" ? (
+      ) : item_type === "side" ? (
         <span><GiFrenchFries /></span>
       ) : (
         <span><RiDrinks2Fill /></span>
@@ -55,7 +56,7 @@ export function MenuItem({ name, id, type, description, price, handleDeleteMenuI
         <h2>{name}</h2>
         <p>{description}</p>
       </div>
-      {user !== "admin" &&
+      {user?.username !== "admin" &&
         <>
           <div className="updateCart">
             <div>
@@ -65,9 +66,16 @@ export function MenuItem({ name, id, type, description, price, handleDeleteMenuI
             <strong>{quantity}</strong>
           </div>
           <strong className="price">{formattedPrice}</strong>
-          {/* <button onClick={() => handleDeleteMenuItem(id)}>Excluir</button> */}
         </>
       }
+      {user?.username === "admin" && (
+        <button
+          className="deleteButton"
+          onClick={() => handleDeleteMenuItem(id)}
+        >
+          <span><FaTrash /></span>
+        </button>
+      )}
     </S.Container>
   );
 }
