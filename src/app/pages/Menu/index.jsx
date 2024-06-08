@@ -14,7 +14,7 @@ import * as S from "./styles.js";
 
 export function Menu() {
   const { cartItems } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [sandwiches, setSandwiches] = useState([])
   const [sides, setSides] = useState([])
@@ -42,6 +42,11 @@ export function Menu() {
     }
   }
 
+  function handleLogout() {
+    setUser(null);
+    navigate('/');
+  };
+
   useEffect(() => {
     getAllMenuItems()
   }, [])
@@ -51,7 +56,7 @@ export function Menu() {
       <button className="orders" onClick={() => navigate('/orders')}>
         <BiSolidFoodMenu />
       </button>
-      <button className="logout" onClick={() => navigate('/')}>
+      <button className="logout" onClick={() => handleLogout()}>
         <IoLogOutOutline />
       </button>
 

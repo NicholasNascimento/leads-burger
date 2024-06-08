@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa";
@@ -5,10 +6,12 @@ import { LuSandwich } from "react-icons/lu";
 import { IoLogOutOutline } from "react-icons/io5";
 
 import { createMenuItem } from "../../utils/http/user.js";
+import { UserContext } from "../../context/UserContext.jsx";
 
 import * as S from "./styles.js"
 
 export function CreateItem() {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
@@ -33,9 +36,14 @@ export function CreateItem() {
     }
   };
 
+  function handleLogout() {
+    setUser(null);
+    navigate('/');
+  };
+
   return (
     <S.Container>
-      <button className="logout" onClick={() => navigate('/')}>
+      <button className="logout" onClick={() => handleLogout()}>
         <IoLogOutOutline />
       </button>
       <S.Content>
