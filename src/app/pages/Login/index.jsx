@@ -28,6 +28,7 @@ export function Login() {
     try {
       const response = await loginUser(data.username, data.password)
 
+      localStorage.setItem('token', response.data.token);
       setUser(response?.data);
       navigate('/menu');
     } catch (error) {

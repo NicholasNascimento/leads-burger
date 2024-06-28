@@ -6,12 +6,8 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState([]);
 
-  const addOrder = (order) => {
-    setOrders(prevOrders => [...prevOrders, order]);
-  };
-
   return (
-    <UserContext.Provider value={{ user, setUser, orders, addOrder }}>
+    <UserContext.Provider value={{ user, setUser, orders, setOrders }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { LuSandwich } from "react-icons/lu";
@@ -6,12 +6,13 @@ import { LuSandwich } from "react-icons/lu";
 import { CartContext } from "../../context/CartContext.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { CartItem } from "../../components/CartItem/index.jsx";
+import { createOrder } from "../../utils/http/user.js";
 
 import * as S from "./styles.js";
 
 export function Cart() {
   const { cartItems } = useContext(CartContext);
-  const { addOrder } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -20,14 +21,26 @@ export function Cart() {
     currency: 'BRL'
   }).format(total);
 
-  const handleMakeOrder = () => {
-    const newOrder = {
-      items: cartItems,
-      total: total,
-      date: new Date().toISOString()
-    };
-    addOrder(newOrder);
-    navigate('/orders');
+  const handleMakeOrder = async () => {
+    try {
+      const orderDetails = {
+        total: total,
+        order_items_attributes: cartItems.map(item => ({
+          name: item.name,
+          menu_item_id: item.id,
+          quantity: item.quantity,
+          price: item.price
+        }))
+      };
+  
+      const response = await createOrder({ order: orderDetails });
+  
+      if (response.status === 201) {
+        navigate('/orders');
+      }
+    } catch (error) {
+      console.error('Failed to place order:', error.response?.data);
+    }
   };
 
   return (

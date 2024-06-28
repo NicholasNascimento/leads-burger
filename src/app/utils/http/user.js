@@ -25,3 +25,11 @@ export async function getMenuItems() {
 export async function deleteMenuItem(id) {
   return await api.delete(`menu_items/${id}`)
 }
+
+export async function createOrder(orderData) {
+  return await api.post('orders', orderData)
+}
+
+export async function getUserOrders() {
+  return await api.get('orders')
+}

@@ -53,9 +53,11 @@ export function Menu() {
 
   return (
     <S.Container>
-      <button className="orders" onClick={() => navigate('/orders')}>
-        <BiSolidFoodMenu />
-      </button>
+      {!user?.admin &&
+        <button className="orders" onClick={() => navigate('/orders')}>
+          <BiSolidFoodMenu />
+        </button>
+      }
       <button className="logout" onClick={() => handleLogout()}>
         <IoLogOutOutline />
       </button>
