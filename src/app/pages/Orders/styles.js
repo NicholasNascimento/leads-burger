@@ -81,4 +81,21 @@ export const Content = styled.div`
       margin-top: 10px;
     }
   }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+
+    span {
+      color: var(--text-primary);
+      font-size: 56px;
+    }
+
+    h2 {
+      color: var(--text-secondary);
+      font-size: 22px;
+    }
+  }
 `

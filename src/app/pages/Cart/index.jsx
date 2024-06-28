@@ -1,18 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { LuSandwich } from "react-icons/lu";
 
 import { CartContext } from "../../context/CartContext.jsx";
-import { UserContext } from "../../context/UserContext.jsx";
 import { CartItem } from "../../components/CartItem/index.jsx";
 import { createOrder } from "../../utils/http/user.js";
 
 import * as S from "./styles.js";
 
 export function Cart() {
-  const { cartItems } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { cartItems, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -36,6 +34,7 @@ export function Cart() {
       const response = await createOrder({ order: orderDetails });
   
       if (response.status === 201) {
+        clearCart();
         navigate('/orders');
       }
     } catch (error) {

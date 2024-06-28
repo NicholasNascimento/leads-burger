@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { LuSandwich } from "react-icons/lu";
+import { TbMoodEmpty } from "react-icons/tb";
 
 import { UserContext } from "../../context/UserContext.jsx";
 import { getUserOrders } from "../../utils/http/user.js";
@@ -26,6 +27,10 @@ export function Orders() {
     loadOrders();
   }, []);
 
+  useEffect(() => {
+    console.log(orders)
+  }, [orders]);
+
   return (
     <S.Container>
       <button
@@ -40,9 +45,9 @@ export function Orders() {
         <button className="backButton" onClick={() => navigate('/menu')}><FaArrowLeft /></button>
 
         <div className="ordersList">
-          {orders?.map((order, index) => (
+          {orders?.slice().reverse().map((order, index) => (
             <div key={index} className="orderCard">
-              <h2>Pedido realizado em: {new Date(order.createdAt).toLocaleString()}</h2>
+              <h2>Pedido realizado em: {new Date(order.created_at).toLocaleString()}</h2>
               <ul>
                 {order?.order_items?.map((item, idx) => (
                   <li key={idx}>
@@ -62,6 +67,12 @@ export function Orders() {
               }).format(order.total)}</strong>
             </div>
           ))}
+          {orders?.length === 0 &&
+            <div className="empty">
+              <span><TbMoodEmpty /></span>
+              <h2>Você ainda não realizou nenhum pedido.</h2>
+            </div>
+          }
         </div>
 
       </S.Content>
